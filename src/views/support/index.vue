@@ -19,8 +19,10 @@
         {{ `10:00:00 - 23:00:00` }}
         {{ t('support.Unit') }}
       </p>
-      <div @click="openCustomer">
-        <a class="btn rounded support-a">{{ customer.name }}</a>
+      <div class="btn-list">
+        <van-button block v-for="item in customerList">
+          {{ item.name }}
+        </van-button>
       </div>
     </div>
   </div>
@@ -33,10 +35,10 @@ import bgImg from '@/assets/img/BG-19.png';
 import { ref } from 'vue';
 import { getCustomer } from '@/api/index.js';
 const onClickLeft = () => history.back();
-const customer = ref({});
+const customerList = ref([]);
 getCustomer().then((res) => {
   if (res.success) {
-    customer.value = res.data[0];
+    customerList.value = res.data;
   } else {
     window.$showFailToast(res.msg);
   }
@@ -56,29 +58,17 @@ const openCustomer = () => {
     font-size: 16px;
     color: var(van-nav-bar);
   }
-  .support-a {
-    margin: 20px auto;
-    padding: 16px 40px;
-    width: calc(100% - 80px);
-    background-color: #5ffc7b;
-    color: #000;
-    font-size: 12px;
-  }
 }
 .text-center {
   text-align: center;
 }
-.btn {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  &.rounded {
-    border-radius: 24px;
-  }
-  &:not(:disabled):not(.disabled) {
-    cursor: pointer;
+.btn-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .van-button {
+    margin: 10px;
+    background-color: #5ffc7b;
   }
 }
 </style>
