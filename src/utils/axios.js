@@ -32,7 +32,6 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   async (res) => {
-    console.log('🚀 正确返还', res);
     if (res.status >= 200 && res.status < 300 && res.data) {
       return Promise.resolve(res.data);
     } else {

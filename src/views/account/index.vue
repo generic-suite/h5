@@ -16,7 +16,7 @@
         </div>
         <div class="userinfo">
           <div class="name">{{ userInfo.username || 'name' }}</div>
-          <van-image width="40px" height="40px" fit="cover" :src="userInfo.level.img" />
+          <van-image width="40px" height="40px" fit="cover" :src="userInfo.vip.img" />
         </div>
         <div class="code" @click="copyCode">
           <div class="label">{{ t('account.ReferralCode') }}: {{ userInfo.codeText }}</div>
