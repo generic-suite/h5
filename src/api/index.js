@@ -53,3 +53,10 @@ export const getCustomer = () => {
     method: 'get',
   });
 };
+
+export const getSystemConfig = () => {
+  return request({
+    url: '/api/system-config',
+    method: 'get',
+  });
+};

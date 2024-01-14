@@ -30,7 +30,7 @@
 
 <script setup>
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue';
-import { getIndex } from './api';
+import { getVipList } from './api';
 import useUserInfo from '@/hooks/useUserInfo';
 const user = useUserInfo();
 const userInfo = computed(() => {
@@ -38,12 +38,9 @@ const userInfo = computed(() => {
 });
 const onClickLeft = () => history.back();
 const vipList = ref([]);
-getIndex().then(({ data }) => {
-  vipList.value = data.vip_list;
+getVipList().then(({ data }) => {
+  vipList.value = data;
 });
-const renderClass = (e) => {
-  return `vip-${e.id}`;
-};
 </script>
 
 <style scoped lang="scss">

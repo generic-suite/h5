@@ -13,3 +13,12 @@ export const getIndex = () => {
     method: 'POST',
   });
 };
+
+// 获取会员列表
+export const getVipList = (params) => {
+  return request({
+    url: '/api/vip-list',
+    method: 'GET',
+    data: params,
+  });
+}

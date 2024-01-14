@@ -28,7 +28,7 @@
               autosize
             />
             <van-field
-              v-model="walletForm.bank_user_name"
+              v-model="walletForm.bank_card"
               label-width="120px"
               :label="t('wallet.Address')"
               :placeholder="t('wallet.PleaseEnter')"
@@ -38,7 +38,7 @@
               autosize
             />
             <van-field
-              v-model="walletForm.bank_account_name"
+              v-model="walletForm.bank_account"
               label-width="120px"
               :label="t('wallet.PublicChain')"
               :placeholder="t('wallet.PleaseEnter')"
@@ -58,18 +58,8 @@
               autosize
             />
             <van-field
-              v-model="walletForm.wise_mail"
+              v-model="walletForm.branch_number"
               :label="t('wallet.wise_mail')"
-              label-width="120px"
-              :placeholder="t('wallet.PleaseEnter')"
-              input-align="right"
-              rows="1"
-              type="textarea"
-              autosize
-            />
-            <van-field
-              v-model="walletForm.wise_user"
-              :label="t('wallet.wise_user')"
               label-width="120px"
               :placeholder="t('wallet.PleaseEnter')"
               input-align="right"
@@ -95,21 +85,19 @@ import { getCardInfo, setCardInfo } from './api';
 const onClickLeft = () => history.back();
 const walletForm = reactive({
   bank_name: '',
-  bank_user_name: '',
-  bank_account_name: '',
+  bank_card: '',
+  bank_account: '',
   branch_name: '',
-  wise_mail: '',
-  wise_user: '',
+  branch_number: '',
 });
 const getCard = async () => {
   const res = await getCardInfo();
   if (res.success) {
     walletForm.bank_name = res.data.bank_name;
-    walletForm.bank_user_name = res.data.bank_user_name;
-    walletForm.bank_account_name = res.data.bank_account_name;
+    walletForm.bank_card = res.data.bank_card;
+    walletForm.bank_account = res.data.bank_account;
     walletForm.branch_name = res.data.branch_name;
-    walletForm.wise_mail = res.data.wise_mail;
-    walletForm.wise_user = res.data.wise_user;
+    walletForm.branch_number = res.data.branch_number;
   }
 };
 

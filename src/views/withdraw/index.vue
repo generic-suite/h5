@@ -35,8 +35,13 @@
 
         <van-form @submit="onSubmit" label-width="130px">
           <div class="form-area">
-            <van-field v-model="formValue.price" :label="t('withdraw.WithdrawAmount')" name="price" type="number" />
-            <van-field v-model="formValue.pass" :label="t('withdraw.WithdrawPassword')" name="pass" type="password" />
+            <van-field v-model="formValue.amount" :label="t('withdraw.WithdrawAmount')" name="amount" type="number" />
+            <van-field
+              v-model="formValue.deal_pass"
+              :label="t('withdraw.WithdrawPassword')"
+              name="deal_pass"
+              type="password"
+            />
           </div>
           <div class="btn-block">
             <van-button block v-if="isWalletAddress" type="primary" native-type="submit">{{
@@ -62,7 +67,7 @@
           <div class="item" v-for="item in negativeList">
             <div class="top">
               <div class="name">{{ item.remark }}</div>
-              <div class="value">-{{ item.price }}</div>
+              <div class="value">-{{ item.amount }}</div>
             </div>
             <div class="bottom">
               <div class="time">{{ item.handle_time }}</div>
@@ -74,7 +79,7 @@
           <div class="item" v-for="item in negativeList">
             <div class="top">
               <div class="name">{{ item.remark }}</div>
-              <div class="value">-{{ item.price }}</div>
+              <div class="value">-{{ item.amount }}</div>
             </div>
             <div class="bottom">
               <div class="time">{{ item.handle_time }}</div>
@@ -101,11 +106,18 @@ import useUserInfo from '@/hooks/useUserInfo';
 import dayjs from 'dayjs';
 // 提现时间限制
 import { useIndexStore } from '@/store';
-const indexStore = useIndexStore();
-indexStore.getIndex();
-const withTimeRange = computed(() => {
-  return indexStore.indexInfo.config.withdraw_time;
-});
+import { getSystemConfig } from '@/api/index.js';
+// const indexStore = useIndexStore();
+// indexStore.getIndex();
+
+const withTimeRange = ref('');
+const getWithTimeRange = async () => {
+  const { data } = await getSystemConfig();
+  const time = `${data.withdraw_start_time} - ${data.withdraw_end_time}`;
+  withTimeRange.value = time;
+};
+getWithTimeRange();
+
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const routerGo = (path) => {
@@ -119,11 +131,11 @@ const userInfo = computed(() => {
 const active = ref(0);
 const onClickLeft = () => history.back();
 const formValue = reactive({
-  price: '',
-  pass: '',
+  amount: '',
+  deal_pass: '',
 });
 const initFormValue = () => {
-  formValue.price = '0.00';
+  formValue.amount = '0.00';
 };
 initFormValue();
 
@@ -160,12 +172,13 @@ const getCardInfo = async () => {
   return Promise.resolve();
 };
 const onSubmit = async (e) => {
+  if (e.amount === '' || e.amount === '0.00') return;
   const params = {
-    pass: formValue.pass,
-    price: formValue.price,
-    web_time: dayjs().format('YYYY/MM/DD HH:mm:ss'),
+    deal_pass: formValue.deal_pass,
+    amount: formValue.amount,
   };
   const res = await withdraw(params);
+  console.log('🚀  file: index.vue:175  onSubmit  res:', res);
   if (res.success) {
     window.$showSuccessToast(res.msg);
   } else {
@@ -175,7 +188,7 @@ const onSubmit = async (e) => {
 (async () => {
   // 这两个接口可以并行请求
   getCardInfo();
-  getList();
+  // getList();
 })();
 </script>
 

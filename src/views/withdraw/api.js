@@ -19,7 +19,7 @@ export const getData = (data) => {
 // 取款
 export const withdraw = (data) => {
   return request({
-    url: '/setWithData',
+    url: '/api/mid-withdraw',
     method: 'POST',
     data,
   });
@@ -28,7 +28,7 @@ export const withdraw = (data) => {
 // 获取钱包信息
 export const getWalletInfo = () => {
   return request({
-    url: '/getCard',
-    method: 'POST',
+    url: '/api/mid-bank/getCard',
+    method: 'GET',
   });
 };
