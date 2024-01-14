@@ -88,7 +88,7 @@
         <div class="product-info">
           <div class="header">
             <div class="photo">
-              <img :src="orderInfo.goods_img" alt="" />
+              <img :src="fileUrl + orderInfo.goods_img" alt="" />
             </div>
             <div class="name">{{ orderInfo.goods_name }}</div>
           </div>
@@ -140,6 +140,7 @@ const imgUrl = computed(() => {
 const showOrderInfo = ref(false);
 const orderInfo = ref({});
 import { showLoadingToast, closeToast } from 'vant';
+const fileUrl = import.meta.env.VITE_FILE_URL;
 
 const orderStart = (e) => {
   showLoadingToast({

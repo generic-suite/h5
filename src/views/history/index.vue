@@ -38,7 +38,7 @@
         <div class="content card">
           <div class="info">
             <div class="photo" style="align-self: flex-start">
-              <img style="width: 100%; border-radius: 12px" :src="item.goods_img" />
+              <img style="width: 100%; border-radius: 12px" :src="fileUrl + item.goods_img" />
             </div>
             <div class="describe">
               {{ item.goods_name }}
@@ -70,6 +70,7 @@ import { getAssetsImgPath } from '@/utils/index.js';
 import { getData, commitOrder } from './api';
 import dayjs from 'dayjs';
 const active = ref('All');
+const fileUrl = import.meta.env.VITE_FILE_URL;
 // 数据源
 const listSource = ref([]);
 const getList = async () => {
