@@ -25,7 +25,7 @@ export const getUserInfo = () => {
 // 注册
 export const registerApi = (data) => {
   return request({
-    url: '/register',
+    url: '/api/user/register',
     method: 'post',
     data,
   });

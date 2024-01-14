@@ -18,11 +18,11 @@
           :rules="formRules.deal_pass"
         />
         <van-field
-          v-model="formValue.pass"
+          v-model="formValue.password"
           :type="passType ? 'text' : 'password'"
-          name="pass"
+          name="password"
           :label="t('login.Password')"
-          :rules="formRules.pass"
+          :rules="formRules.password"
         >
           <template #right-icon>
             <div style="cursor: pointer" @click="togglePassInputType">
@@ -32,16 +32,16 @@
         </van-field>
 
         <van-field
-          v-model="formValue.Confirm_Password"
+          v-model="formValue.repassword"
           label-width="100px"
           type="password"
-          name="Confirm_Password"
+          name="repassword"
           :label="t('login.Confirm_Password')"
-          :rules="formRules.Confirm_Password"
+          :rules="formRules.repassword"
         />
         <van-field
           v-model="formValue.invite_code"
-          name="Referral_Code"
+          name="invite_code"
           :label="t('login.Referral_Code')"
           :rules="formRules.invite_code"
         />
@@ -82,8 +82,8 @@ const formValue = reactive({
   username: '', // 用户名
   mobile: '', // 手机号
   deal_pass: '', // 取款密码
-  pass: '', // 密码
-  Confirm_Password: '', // 二次确认的密码
+  password: '', // 密码
+  repassword: '', // 二次确认的密码
   invite_code: '', // 推荐码
   agreed: false, // 是否同意协议
 });
@@ -107,15 +107,15 @@ const formRules = {
     { required: true, message: t('login.fill_With_Password') },
     { message: t('login.With_Password_LenghtRules_6_32'), pattern: /^.{6,32}$/ },
   ],
-  pass: [
+  password: [
     { required: true, message: t('login.fill_Password') },
     { message: t('login.Password_LenghtRules_6_32'), pattern: /^.{6,32}$/ },
   ],
-  Confirm_Password: [
+  repassword: [
     { required: true, message: t('login.fill_Confirm_Password') },
     {
       validator: (value) => {
-        return value === formValue.pass;
+        return value === formValue.password;
       },
       message: t('login.Passwords_entered_twice_are_inconsistent'),
     },
@@ -127,12 +127,13 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const onSubmit = async (e) => {
   const params = {
+    username: formValue.username,
+    realname: formValue.username,
+    password: formValue.password,
+    repassword: formValue.repassword,
+    mobile: formValue.mobile,
     deal_pass: formValue.deal_pass,
     invite_code: formValue.invite_code,
-    mobile: formValue.mobile,
-    username: formValue.username,
-    pass: formValue.pass,
-    nickname: formValue.username,
   };
   const res = await registerApi(params);
   if (!res.success) return window.$showFailToast(res.msg);
