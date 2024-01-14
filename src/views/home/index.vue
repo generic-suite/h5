@@ -32,7 +32,7 @@
         <div class="name">
           <div>{{ userInfo.nickname }}</div>
           <div class="photo">
-            <img :src="userInfo.vip.img" alt="" />
+            <img :src="fileUrl + userInfo.vip.img" alt="" />
           </div>
         </div>
         <!-- 金刚区 -->
@@ -218,6 +218,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+const fileUrl = import.meta.env.VITE_FILE_URL;
 
 import { photoListData } from './api';
 const photoList = ref(photoListData);
@@ -365,12 +366,11 @@ const routerGo = (path) => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
-  .item{
+  .item {
     display: flex;
     align-items: center;
-    img{
-    height: auto;
-
+    img {
+      height: auto;
     }
   }
 }

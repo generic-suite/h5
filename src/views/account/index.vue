@@ -16,7 +16,7 @@
         </div>
         <div class="userinfo">
           <div class="name">{{ userInfo.username || 'name' }}</div>
-          <van-image width="40px" height="40px" fit="cover" :src="userInfo.vip.img" />
+          <van-image width="40px" height="40px" fit="cover" :src="fileUrl + userInfo.vip.img" />
         </div>
         <div class="code" @click="copyCode">
           <div class="label">{{ t('account.ReferralCode') }}: {{ userInfo.codeText }}</div>
@@ -78,6 +78,7 @@ import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue';
 import { showSuccessToast } from 'vant';
 import userAvatar from '@/assets/img/BG-20.png';
 const onClickLeft = () => history.back();
+const fileUrl = import.meta.env.VITE_FILE_URL;
 const appName = computed(() => {
   return import.meta.env.VITE_APP_TITLE || 'appName';
 });

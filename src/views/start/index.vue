@@ -51,7 +51,7 @@
         </div>
         <div class="right">
           <div>{{ userInfo.username }}</div>
-          <div class="vipimg"><img :src="imgUrl" alt="" /></div>
+          <div class="vipimg"><img :src="fileUrl + imgUrl" alt="" /></div>
         </div>
       </div>
       <div class="info">
@@ -132,6 +132,7 @@ import logoImg from '@/icons/logo.svg';
 import { getAssetsImgPath } from '@/utils/index.js';
 import { setOrder, commitOrder } from './api';
 import useUserInfo from '@/hooks/useUserInfo';
+const fileUrl = import.meta.env.VITE_FILE_URL;
 // 用户信息
 const userInfo = ref(useUserInfo().userInfo);
 const imgUrl = computed(() => {
@@ -140,7 +141,6 @@ const imgUrl = computed(() => {
 const showOrderInfo = ref(false);
 const orderInfo = ref({});
 import { showLoadingToast, closeToast } from 'vant';
-const fileUrl = import.meta.env.VITE_FILE_URL;
 
 const orderStart = (e) => {
   showLoadingToast({
