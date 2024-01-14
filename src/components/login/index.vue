@@ -22,7 +22,7 @@
         </van-field>
         <van-field
           v-model="formValue.password"
-          name="pass"
+          name="password"
           type="password"
           :label="t('login.Password')"
           :placeholder="t('login.Password')"

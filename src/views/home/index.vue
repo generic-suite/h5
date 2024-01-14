@@ -32,7 +32,7 @@
         <div class="name">
           <div>{{ userInfo.nickname }}</div>
           <div class="photo">
-            <img :src="userInfo.level.img" alt="" />
+            <img :src="userInfo.vip.img" alt="" />
           </div>
         </div>
         <!-- 金刚区 -->
@@ -238,9 +238,9 @@ const userInfo = computed(() => {
 const vipList = ref([]);
 const index = useIndexStore();
 const getIndexData = async () => {
-  console.log('index', index);
-  const res = await index.getIndex();
-  vipList.value = res.data.vip_list;
+  // console.log('index', index);
+  // const res = await index.getIndex();
+  // vipList.value = res.data.vip_list;
 };
 getIndexData();
 

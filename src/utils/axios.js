@@ -19,12 +19,10 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // 毫秒时间戳
-    const S_Time = new Date().getTime();
-    config.headers['S-Time'] = S_Time;
-    const tokenSocurce = `${S_Time}@62b7c5572a99ee1@${S_Time}`;
-    const S_Token = CryptoJS.MD5(tokenSocurce).toString();
-    config.headers['S-Token'] = S_Token;
-    config.headers['authorization'] = getToken() || '';
+    const token = getToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
@@ -34,19 +32,19 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   async (res) => {
-    if (res.status == 200 && res.data) {
-      // 需要重新登录
-      if (res.data.logout === true) {
-        removeToken();
-        window.location.href = '/login';
-        return;
-      }
-      return res.data;
+    console.log('🚀 正确返还', res);
+    if (res.status >= 200 && res.status < 300 && res.data) {
+      return Promise.resolve(res.data);
     } else {
-      return Promise.reject(msg);
+      return Promise.reject(res);
     }
   },
   (error) => {
+    if (error.response.status === 401) {
+      removeToken();
+      window.location.href = '/login';
+      return;
+    }
     return Promise.reject(error);
   },
 );

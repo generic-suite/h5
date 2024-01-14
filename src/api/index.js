@@ -9,7 +9,7 @@ import request from '@/utils/axios.js';
 // 登录
 export const login = (data) => {
   return request({
-    url: '/login',
+    url: '/api/user/login',
     method: 'post',
     data,
   });
@@ -18,7 +18,7 @@ export const login = (data) => {
 // 获取用户信息
 export const getUserInfo = () => {
   return request({
-    url: '/getUserInfo',
+    url: '/api/user/getUserInfo',
     method: 'POST',
   });
 };
@@ -49,7 +49,7 @@ export const getIndex = () => {
 // 获取客服信息
 export const getCustomer = () => {
   return request({
-    url: '/getCustomer',
-    method: 'post',
+    url: '/api/customer',
+    method: 'get',
   });
 };
