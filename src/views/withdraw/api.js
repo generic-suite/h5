@@ -9,10 +9,9 @@ import request from '@/utils/axios';
 
 export const getData = (data) => {
   return request({
-    url: '/getWithList',
-    // url: '/getWalletDepositList', // new interface
-    method: 'POST',
-    data,
+    url: '/api/mid-withdraw/getMyList',
+    method: 'get',
+    params: data,
   });
 };
 

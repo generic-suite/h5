@@ -66,27 +66,15 @@
         >
           <div class="item" v-for="item in negativeList">
             <div class="top">
-              <div class="name">{{ item.remark }}</div>
+              <div class="name">{{ item.username }}</div>
               <div class="value">-{{ item.amount }}</div>
             </div>
             <div class="bottom">
-              <div class="time">{{ item.handle_time }}</div>
+              <div class="time">{{ item.created_at }}</div>
               <div class="balance">{{ item.price_pre }}</div>
             </div>
           </div>
         </van-list>
-        <div class="list" v-if="false">
-          <div class="item" v-for="item in negativeList">
-            <div class="top">
-              <div class="name">{{ item.remark }}</div>
-              <div class="value">-{{ item.amount }}</div>
-            </div>
-            <div class="bottom">
-              <div class="time">{{ item.handle_time }}</div>
-              <div class="balance">{{ item.price_pre }}</div>
-            </div>
-          </div>
-        </div>
       </template>
       <template v-else>
         <van-button block style="--van-button-radius: 15px" size="large" type="warning">{{
@@ -105,11 +93,7 @@ import { getData, withdraw, getWalletInfo } from './api';
 import useUserInfo from '@/hooks/useUserInfo';
 import dayjs from 'dayjs';
 // 提现时间限制
-import { useIndexStore } from '@/store';
 import { getSystemConfig } from '@/api/index.js';
-// const indexStore = useIndexStore();
-// indexStore.getIndex();
-
 const withTimeRange = ref('');
 const getWithTimeRange = async () => {
   const { data } = await getSystemConfig();
@@ -146,15 +130,14 @@ const currentPage = ref(0);
 const getList = async () => {
   currentPage.value++;
   const params = {
-    page: currentPage.value,
-    web_time: dayjs().format('YYYY/MM/DD HH:mm:ss'),
+    current: currentPage.value,
   };
   const res = await getData(params);
   loading.value = false;
-  if (dataList.value.length >= res.total) {
+  dataList.value.push(...res.data.list);
+  if (dataList.value.length >= res.data.pagination.total) {
     finished.value = true;
   }
-  dataList.value.push(...res.data);
   return Promise.resolve();
 };
 const negativeList = computed(() => {
@@ -188,7 +171,7 @@ const onSubmit = async (e) => {
 (async () => {
   // 这两个接口可以并行请求
   getCardInfo();
-  // getList();
+  getList();
 })();
 </script>
 
