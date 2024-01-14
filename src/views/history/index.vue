@@ -31,8 +31,8 @@
         <div class="top">
           <div class="time">{{ item.create_time }}</div>
           <div class="right">
-            <div class="tag" :class="'tag' + item.status">{{ renderStatus(item.status) }}</div>
-            <div class="tag btn" v-if="item.status === 1" @click="onSubmit(item.id)">Submit</div>
+            <div class="tag" :class="'tag' + item.order_status">{{ renderStatus(item.order_status) }}</div>
+            <div class="tag btn" v-if="item.order_status === 1" @click="onSubmit(item.order_id)">Submit</div>
           </div>
         </div>
         <div class="content card">
@@ -47,11 +47,11 @@
           <div class="price-block">
             <div class="item">
               <p class="label">{{ t('history.Price') }}</p>
-              <span class="value">USDT {{ item.price }}</span>
+              <span class="value">USDT {{ item.order_amount }}</span>
             </div>
             <div class="item">
               <p class="label">{{ t('history.TotalCommission') }}</p>
-              <span class="value">USDT {{ item.commission }}</span>
+              <span class="value">USDT {{ item.order_commission }}</span>
             </div>
           </div>
           <div class="row align-items-center"></div>

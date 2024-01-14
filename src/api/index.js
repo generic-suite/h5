@@ -54,6 +54,7 @@ export const getCustomer = () => {
   });
 };
 
+// 获取系统配置
 export const getSystemConfig = () => {
   return request({
     url: '/api/system-config',

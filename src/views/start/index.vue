@@ -1,10 +1,3 @@
-<!--
- * @Descripttion: 
- * @Author: harley
- * @Date: 2023-10-05 10:18:17
- * @LastEditors: Harley
- * @LastEditTime: 2023-12-17 11:33:00
--->
 <template>
   <div class="pages">
     <div class="header">
@@ -47,7 +40,7 @@
     <div class="handle-area">
       <a @click="orderStart" style="">
         <p class="start-text">{{ t('start.StartRating') }}</p>
-        <p>({{ userInfo.order_total }}/{{ userInfo.level.order_num }})</p>
+        <!-- <p>({{ userInfo.order_total }}/{{ userInfo.level.order_num }})</p> -->
       </a>
     </div>
 
@@ -102,17 +95,17 @@
           <div class="price">
             <div class="item">
               <div class="label">{{ t('start.Total_amount') }}</div>
-              <div class="value">USDT {{ orderInfo.price }}</div>
+              <div class="value">USDT {{ orderInfo.order_amount }}</div>
             </div>
             <div class="item">
               <div class="label">{{ t('start.Profit') }}</div>
-              <div class="value">USDT {{ orderInfo.commission }}</div>
+              <div class="value">USDT {{ orderInfo.order_commission }}</div>
             </div>
           </div>
           <div class="cell-info">
             <div class="cell-item">
               <div class="label">{{ t('start.Creation_time') }}</div>
-              <div class="value">{{ orderInfo.create_time }}</div>
+              <div class="value">{{ dayjs(orderInfo.create_time).format('yyyy-MM-dd hh:mm:ss') }}</div>
             </div>
             <div class="cell-item">
               <div class="label">{{ t('start.Data_No') }}</div>
@@ -132,6 +125,7 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
+import dayjs from 'dayjs';
 const { t } = useI18n();
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue';
 import logoImg from '@/icons/logo.svg';
@@ -141,7 +135,7 @@ import useUserInfo from '@/hooks/useUserInfo';
 // 用户信息
 const userInfo = ref(useUserInfo().userInfo);
 const imgUrl = computed(() => {
-  return userInfo.value.level.img || '';
+  return userInfo.value.vip.img || '';
 });
 const showOrderInfo = ref(false);
 const orderInfo = ref({});
@@ -202,11 +196,14 @@ const onSubmit = () => {
 };
 
 // 开关盘时间
-import { useIndexStore } from '@/store';
-const indexStore = useIndexStore();
-indexStore.getIndex();
-const timeRange = computed(() => {
-  return indexStore.indexInfo.config.operation_time;
+import { getSystemConfig } from '@/api/index.js';
+const timeRange = ref('');
+getSystemConfig().then((res) => {
+  if (res.success) {
+    console.log('🚀  file: index.vue:202  getSystemConfig  res:', res.data);
+    const data = res.data;
+    timeRange.value = `${data.open_time} - ${data.close_time}`;
+  }
 });
 
 import { useRouter } from 'vue-router';

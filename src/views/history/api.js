@@ -153,15 +153,14 @@ const data = [
 ];
 export const getData = (params) => {
   return request({
-    url: '/getOrderList',
-    method: 'POST',
-    params,
+    url: '/api/mid-order/getOrderList',
+    method: 'get',
   });
 };
 
 export const commitOrder = (id) => {
   return request({
-    url: '/commitOrder',
+    url: '/api/mid-order/submitOrder',
     method: 'POST',
     data: {
       order_id: id,
