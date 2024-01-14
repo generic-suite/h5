@@ -1,0 +1,41 @@
+.van-hairline--bottom:after {
+  border-bottom: none;
+}
+
+.van-nav-bar {
+  --van-nav-bar-background: transparent;
+  --van-nav-bar-background: rgb(29, 29, 29);
+  --van-nav-bar-title-text-color: #fff;
+  --van-nav-bar-icon-color: #fff;
+}
+.van-tabs__nav {
+  --van-tabs-nav-background: transparent;
+  --van-tab-font-size: 18px;
+}
+.van-button {
+  --van-button-primary-background: #d81427;
+  --van-button-primary-border-color: #fff;
+  --van-button-border-width: 0;
+}
+
+.van-field {
+  --van-cell-horizontal-padding: 10px;
+  .van-field__label {
+    transition: all 0.3s ease-in-out;
+  }
+  &:has(.van-field__control:focus) {
+    .van-field__label {
+      color: #333;
+    }
+  }
+}
+
+:root {
+  --van-button-danger-background: #f8d7da;
+  --van-button-danger-color: #dc3545;
+  --van-button-danger-border-color: #f5c6cb;
+
+  --van-button-warning-color: #856404;
+  --van-button-warning-background: #fff3cd;
+  --van-button-warning-border-color: #ffeeba;
+}

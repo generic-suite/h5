@@ -1,0 +1,28 @@
+@import url('./variable.scss');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 1rem;
+  font-weight: 400;
+  color: #212529;
+  font-family: Roboto, sans-serif;
+  line-height: 20px;
+  margin: 0 auto;
+  --page-width: min(500px, 100vw);
+  width: var(--page-width);
+}
+#app {
+  // width: min(500px, 100vw);
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
