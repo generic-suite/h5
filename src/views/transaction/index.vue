@@ -8,18 +8,6 @@
 <template>
   <van-nav-bar :title="t('transaction.header')" left-arrow @click-left="onClickLeft" fixed />
   <div class="main">
-    <div style="padding: 0 20px">
-      <van-field
-        v-model="searchDate"
-        is-link
-        readonly
-        name="datePicker"
-        label=""
-        placeholder="点击选择时间"
-        @click="showCalendar = true"
-      />
-    </div>
-    <van-calendar v-model:show="showCalendar" @confirm="onConfirm" :min-date="minDate" :max-date="maxDate" />
     <van-list
       class="list"
       v-model:loading="loading"
@@ -31,11 +19,11 @@
     >
       <div class="item" v-for="item in dataList">
         <div class="info">
-          <div class="name">{{ item.title || 'Bonus' }}</div>
-          <div class="time">{{ renderTime(item.create_time) }}</div>
+          <div class="name">{{ item.remark || 'Bonus' }}</div>
+          <div class="time">{{ renderTime(item.createTime) }}</div>
         </div>
         <div class="value">
-          <div class="nums" v-if="isGtZero(item.price)">USDT {{ item.price }}</div>
+          <div class="nums" v-if="item.status === 1">USDT {{ item.price }}</div>
           <div class="nums red" v-else>USDT ({{ item.price }})</div>
         </div>
       </div>
@@ -49,15 +37,10 @@ const { t } = useI18n();
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue';
 import { renderTime } from '@/utils/index.js';
 import dayjs from 'dayjs';
-// 最小日期为3年前 dayjs
-const minDate = dayjs().subtract(1, 'year').toDate();
-const maxDate = dayjs().toDate();
 const onClickLeft = () => {
   // 返回上个路由
   history.back();
 };
-const searchDate = ref(dayjs().format('YYYY-MM-DD'));
-const showCalendar = ref(false);
 
 import { getList } from './api';
 const dataList = ref([]);
@@ -67,13 +50,13 @@ const currentPage = ref(0);
 const onLoad = () => {
   currentPage.value += 1;
   const params = {
-    page: currentPage.value,
-    web_time: searchDate.value,
+    current: currentPage.value,
   };
   getList(params).then((res) => {
+    console.log('🚀  file: index.vue:74  getList  res:', res);
     loading.value = false;
-    dataList.value.push(...res.data);
-    if (dataList.value.length >= res.total) {
+    dataList.value.push(...res.data.list);
+    if (dataList.value.length >= res.data.pagination.total) {
       finished.value = true;
     } else {
       finished.value = false;
@@ -81,12 +64,6 @@ const onLoad = () => {
   });
 };
 
-const onConfirm = async (val) => {
-  searchDate.value = dayjs(val).format('YYYY-MM-DD');
-  showCalendar.value = false;
-  currentPage.value = 0;
-  onLoad();
-};
 // 是否大于0
 const isGtZero = (e) => {
   const num = Number(e);
