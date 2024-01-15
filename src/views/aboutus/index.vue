@@ -13,19 +13,18 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const onClickLeft = () => history.back();
-import { useIndexStore } from '@/store';
-import { computed } from 'vue';
-const indexStore = useIndexStore();
-indexStore.getIndex();
-const html = computed(() => {
-  let str = '';
-  try {
-    str = indexStore.indexInfo.config.about_us_vi;
-  } catch (error) {}
-  return str;
+
+import { getSystemText } from '@/api/index';
+const html = ref('');
+const params = {
+  config_type: 11,
+};
+getSystemText(params).then((res) => {
+  html.value = res.data[0].content;
 });
 </script>
 
@@ -33,7 +32,6 @@ const html = computed(() => {
 .main {
   margin: 0 auto;
   margin-top: 45px;
-  background: #000;
   color: #fff;
   .text {
     padding: 20px;

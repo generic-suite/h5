@@ -61,3 +61,12 @@ export const getSystemConfig = () => {
     method: 'get',
   });
 };
+
+// 获取系统文本信息
+export const getSystemText = (data) => {
+  return request({
+    url: '/api/sys-config-text',
+    method: 'get',
+    params: data,
+  });
+}

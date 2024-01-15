@@ -13,16 +13,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useIndexStore } from '@/store';
-const indexStore = useIndexStore();
-indexStore.getIndex();
-const html = computed(() => {
-  let str = '';
-  try {
-    str = indexStore.indexInfo.config.intro_vi;
-  } catch (error) {}
-  return str;
+import { ref } from 'vue';
+import { getSystemText } from '@/api/index';
+const html = ref('');
+const params = {
+  config_type: 11,
+};
+getSystemText(params).then((res) => {
+  html.value = res.data[0].content;
 });
 const onClickLeft = () => history.back();
 </script>

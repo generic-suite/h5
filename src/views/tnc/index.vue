@@ -6,19 +6,18 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
-import { useIndexStore } from '@/store/index';
-import { computed } from 'vue';
-const index = useIndexStore();
-
 const onClickLeft = () => history.back();
-const html = computed(() => {
-  let str = '';
-  try {
-    str = index.indexInfo.config.rule_vi;
-  } catch (error) {}
-  return str;
+
+import { getSystemText } from '@/api/index';
+const html = ref('');
+const params = {
+  config_type: 8,
+};
+getSystemText(params).then((res) => {
+  html.value = res.data[0].content;
 });
 </script>
 
