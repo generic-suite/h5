@@ -15,7 +15,7 @@ export default {
   changePassword: '修改密码',
   OldPassword: '旧密码',
   NewPassword: '新密码',
-  ConfirmPassword: '确认密码',
+  repassword: '确认密码',
   // 两次密码不一致
   PasswordInconsistent: '两次密码不一致',
 };

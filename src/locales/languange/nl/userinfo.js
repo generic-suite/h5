@@ -15,7 +15,7 @@ export default {
   changePassword: 'Wachtwoord wijzigen',
   OldPassword: 'Oud wachtwoord',
   NewPassword: 'Nieuw wachtwoord',
-  ConfirmPassword: 'Wachtwoord bevestigen',
+  repassword: 'Wachtwoord bevestigen',
   // 两次密码不一致
   PasswordInconsistent: 'De twee wachtwoorden komen niet overeen',
 };

@@ -14,5 +14,5 @@ export default {
 
   OldPassword: 'Old Password',
   NewPassword: 'New Password',
-  ConfirmPassword: 'Confirm Password',
+  repassword: 'Confirm Password',
 };

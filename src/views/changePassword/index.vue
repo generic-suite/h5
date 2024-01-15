@@ -12,24 +12,24 @@
       <van-form @submit="onSubmit">
         <van-cell-group inset>
           <van-field
-            v-model="formValue.old_pass"
+            v-model="formValue.oldPassword"
             label-width="100px"
-            name="old_pass"
+            name="oldPassword"
             :label="t('userinfo.OldPassword')"
             input-align="right"
           />
           <van-field
-            v-model="formValue.new_pass"
+            v-model="formValue.password"
             label-width="160px"
-            name="new_pass"
+            name="password"
             :label="t('userinfo.NewPassword')"
             input-align="right"
           />
           <van-field
-            v-model="formValue.confirmPassword"
+            v-model="formValue.repassword"
             label-width="120px"
-            name="confirmPassword"
-            :label="t('userinfo.ConfirmPassword')"
+            name="repassword"
+            :label="t('userinfo.repassword')"
             input-align="right"
           />
         </van-cell-group>
@@ -48,25 +48,24 @@ import { ref, reactive } from 'vue';
 const onClickLeft = () => history.back();
 
 const formValue = reactive({
-  old_pass: '',
-  new_pass: '',
-  conformPassword: '',
+  oldPassword: '',
+  password: '',
+  repassword: '',
 });
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 import { changePass } from './api';
 const onSubmit = async (values) => {
-  if (values.new_pass !== values.confirmPassword) {
+  if (values.password !== values.repassword) {
     window.$showFailToast(t('userinfo.PasswordInconsistent'));
     return;
   }
 
   const params = {
     ...values,
-    type: route.query.type,
+    type: +route.query.type,
   };
-  delete params.confirmPassword;
   const res = await changePass(params);
   if (res.success) {
     window.$showSuccessToast(res.msg);
