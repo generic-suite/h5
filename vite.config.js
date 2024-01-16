@@ -17,6 +17,7 @@ export default (configEnv) => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd());
   const { VITE_BASE_URL, VITE_APP_TITLE, VITE_ENV } = viteEnv;
   return {
+    base: '/h5',
     plugins: [
       vue(),
       Components({
