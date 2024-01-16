@@ -12,7 +12,7 @@ import useUserInfo from '@/hooks/useUserInfo.js';
 import { i18n } from '@/locales/setupI18n.js';
 const { t } = i18n.global;
 const router = createRouter({
-  history: createWebHistory(), //可传参数，配置base路径，例如'/app'
+  history: createWebHistory('/h5'), //可传参数，配置base路径，例如'/app'
   routes,
 });
 
