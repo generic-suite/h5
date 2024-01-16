@@ -40,7 +40,7 @@
     <div class="handle-area">
       <a @click="orderStart" style="">
         <p class="start-text">{{ t('start.StartRating') }}</p>
-        <!-- <p>({{ userInfo.order_total }}/{{ userInfo.level.order_num }})</p> -->
+        <p>({{ userInfo.today_trade_order_count }}/{{ userInfo.vip.order_count }})</p>
       </a>
     </div>
 
