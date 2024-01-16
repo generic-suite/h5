@@ -9,7 +9,8 @@ import axios from 'axios';
 import { getToken, removeToken } from './auth.js';
 import CryptoJS from 'crypto-js';
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   // 超时
@@ -41,7 +42,7 @@ service.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       removeToken();
-      window.location.href = '/login';
+      router.push('/login');
       return;
     }
     return Promise.reject(error);
